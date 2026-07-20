@@ -1,0 +1,38 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/ecoflow-iot-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: accessKey
+  type: apiKey
+  in: header
+  parameter: accessKey
+  description: Access key issued in the EcoFlow developer console.
+  sources:
+  - openapi/ecoflow-iot-openapi.yml
+- name: nonce
+  type: apiKey
+  in: header
+  parameter: nonce
+  description: Random nonce (typically a 6-digit number) regenerated per request.
+  sources:
+  - openapi/ecoflow-iot-openapi.yml
+- name: timestamp
+  type: apiKey
+  in: header
+  parameter: timestamp
+  description: Unix timestamp in milliseconds at request time.
+  sources:
+  - openapi/ecoflow-iot-openapi.yml
+- name: sign
+  type: apiKey
+  in: header
+  parameter: sign
+  description: HMAC-SHA256 signature (hex) over the ASCII-sorted request parameters concatenated
+    with `accessKey`, `nonce` and `timestamp`, keyed by the secretKey.
+  sources:
+  - openapi/ecoflow-iot-openapi.yml
