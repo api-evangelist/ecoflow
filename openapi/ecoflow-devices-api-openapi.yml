@@ -1,0 +1,126 @@
+openapi: 3.0.3
+info:
+  title: EcoFlow IoT Open Platform Devices API
+  description: The EcoFlow IoT Open Platform (developer.ecoflow.com) HTTP API lets registered developers read telemetry from and send control commands to EcoFlow devices (portable power stations, Delta/River series, PowerStream micro-inverters, smart plugs, Power Kits and more) that are bound to a user account. Access is authenticated with an accessKey / secretKey pair issued in the developer console; every request carries an HMAC-SHA256 `sign` header computed over the sorted request parameters plus `accessKey`, `nonce` and `timestamp`. Real-time streaming and command delivery is handled over MQTT (see the companion AsyncAPI); this HTTP surface covers device discovery, a snapshot of all device "quota" (property) values, targeted quota queries, device function commands, and retrieval of the MQTT connection certificate.
+  version: '1.0'
+  contact:
+    name: EcoFlow Developer Platform
+    url: https://developer.ecoflow.com
+  x-source: Endpoint surface, headers and signing verified from EcoFlow developer portal (developer.ecoflow.com / developer-eu.ecoflow.com) and independent public-API client implementations (github.com/tolwi/hassio-ecoflow-cloud).
+servers:
+- url: https://api.ecoflow.com
+  description: Global / US region
+- url: https://api-e.ecoflow.com
+  description: Europe region
+security:
+- accessKey: []
+  nonce: []
+  timestamp: []
+  sign: []
+tags:
+- name: Devices
+  description: Device discovery and binding
+paths:
+  /iot-open/sign/device/list:
+    get:
+      operationId: getDeviceList
+      summary: List bound devices
+      description: Returns the list of EcoFlow devices bound to the account that owns the accessKey, including each device serial number (sn), product name and online status.
+      tags:
+      - Devices
+      responses:
+        '200':
+          description: Device list retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceListResponse'
+              example:
+                code: '0'
+                message: Success
+                data:
+                - sn: R331ZEB4ZEAL0000
+                  productName: DELTA 2
+                  online: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  schemas:
+    Device:
+      type: object
+      properties:
+        sn:
+          type: string
+          description: Device serial number.
+        productName:
+          type: string
+          description: Product model name.
+        online:
+          type: integer
+          description: Online status (1 online, 0 offline).
+    Envelope:
+      type: object
+      description: Standard EcoFlow response envelope.
+      properties:
+        code:
+          type: string
+          description: Result code; "0" indicates success, any other value is an error.
+        message:
+          type: string
+          description: Human-readable result message.
+      required:
+      - code
+      - message
+    ErrorResponse:
+      $ref: '#/components/schemas/Envelope'
+    DeviceListResponse:
+      allOf:
+      - $ref: '#/components/schemas/Envelope'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/Device'
+  responses:
+    Unauthorized:
+      description: Authentication failed (bad accessKey, expired timestamp, or sign mismatch)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: '7000'
+            message: Signature verification failed
+    ServerError:
+      description: Server-side error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: '500'
+            message: System error
+  securitySchemes:
+    accessKey:
+      type: apiKey
+      in: header
+      name: accessKey
+      description: Access key issued in the EcoFlow developer console.
+    nonce:
+      type: apiKey
+      in: header
+      name: nonce
+      description: Random nonce (typically a 6-digit number) regenerated per request.
+    timestamp:
+      type: apiKey
+      in: header
+      name: timestamp
+      description: Unix timestamp in milliseconds at request time.
+    sign:
+      type: apiKey
+      in: header
+      name: sign
+      description: HMAC-SHA256 signature (hex) over the ASCII-sorted request parameters concatenated with `accessKey`, `nonce` and `timestamp`, keyed by the secretKey.
