@@ -1,0 +1,25 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/ecoflow-iot-openapi.yml
+standards:
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      Auth is an accessKey/secretKey HMAC-SHA256 signed-header scheme, not OAuth2.
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use a proprietary code/message/data envelope, not problem+json.
+  - id: mqtt
+    conforms: true
+    evidence: Real-time surface is MQTT over TLS (port 8883); see asyncapi/.
+  - id: hmac-request-signing
+    conforms: true
+    evidence: HMAC-SHA256 sign header over sorted params + accessKey/nonce/timestamp.
+  - id: pagination
+    conforms: false
+    evidence: No paginated collection endpoints.
+  - id: idempotency
+    conforms: false
+    evidence: No documented idempotency-key contract.

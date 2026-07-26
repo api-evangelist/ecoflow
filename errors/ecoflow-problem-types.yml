@@ -1,0 +1,33 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/ecoflow-iot-openapi.yml
+format: ecoflow-envelope
+envelope:
+  shape: '{ code, message, data }'
+  success_code: '0'
+  error_field: code
+  message_field: message
+  detail: >-
+    EcoFlow does not use RFC 9457 problem+json. Every response is the standard
+    envelope; a non-"0" string code plus a human-readable message signals an
+    error. The problems below are derived from the HTTP status responses declared
+    in the OpenAPI; the illustrative envelope codes shown are examples of the
+    error-code field, not an exhaustive registry.
+problems:
+  - status: 400
+    title: Bad request
+    description: Invalid parameters or a malformed request body/signature input.
+    envelope_code_example: '6001'
+    source_operation: openapi/ecoflow-iot-openapi.yml#getQuota
+  - status: 401
+    title: Authentication failed
+    description: >-
+      accessKey unknown, timestamp outside the accepted window, or the sign
+      signature did not verify against the secretKey.
+    envelope_code_example: '7000'
+    source_operation: openapi/ecoflow-iot-openapi.yml#getDeviceList
+  - status: 500
+    title: Server error
+    description: Server-side/system error processing the request.
+    envelope_code_example: '500'
+    source_operation: openapi/ecoflow-iot-openapi.yml#setQuota

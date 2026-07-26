@@ -1,0 +1,18 @@
+{
+  "provider": "ecoflow",
+  "sources": [
+    "ecoflow-devices-api-openapi.yml",
+    "ecoflow-mqtt-api-openapi.yml",
+    "ecoflow-quota-api-openapi.yml"
+  ],
+  "outputs": [
+    "ecoflow-devices-api-openapi.yml",
+    "ecoflow-mqtt-api-openapi.yml",
+    "ecoflow-quota-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

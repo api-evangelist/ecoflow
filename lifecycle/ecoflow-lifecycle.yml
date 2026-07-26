@@ -1,0 +1,19 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/ecoflow-iot-openapi.yml
+versioning:
+  scheme: uri-path
+  detail: Endpoints are served under the /iot-open/sign/ path prefix.
+  docs: https://developer.ecoflow.com
+deprecation:
+  policy_url: null
+  sunset_header: false
+  detail: No published deprecation/Sunset (RFC 8594) policy found in the developer docs.
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+regions:
+  - {region: global, api: https://api.ecoflow.com, mqtt: mqtt.ecoflow.com}
+  - {region: europe, api: https://api-e.ecoflow.com, mqtt: mqtt-e.ecoflow.com}
+deprecated_operations: []

@@ -1,0 +1,139 @@
+asyncapi: 2.6.0
+info:
+  title: EcoFlow IoT Open Platform MQTT API
+  version: '1.0'
+  description: >-
+    Real-time streaming and command channel for the EcoFlow IoT Open Platform.
+    After obtaining a certificate from the HTTP `getMqttCertification` endpoint,
+    a developer connects to the EcoFlow MQTT broker over TLS (port 8883) using
+    the returned certificateAccount / certificatePassword and subscribes to
+    per-device topics to receive live quota (telemetry) and status updates, and
+    publishes to the `set` topic to send device function commands.
+  x-source: >-
+    Topic patterns and broker host verified from EcoFlow public-API client
+    implementations (github.com/tolwi/hassio-ecoflow-cloud) and the EcoFlow
+    developer portal.
+servers:
+  global:
+    url: mqtt.ecoflow.com:8883
+    protocol: mqtts
+    description: Global / US region MQTT broker (TLS).
+  europe:
+    url: mqtt-e.ecoflow.com:8883
+    protocol: mqtts
+    description: Europe region MQTT broker (TLS).
+defaultContentType: application/json
+channels:
+  /open/{certificateAccount}/{sn}/quota:
+    description: Live device property (quota) telemetry stream published by the device.
+    parameters:
+      certificateAccount:
+        description: MQTT account from the certification response.
+        schema:
+          type: string
+      sn:
+        description: Device serial number.
+        schema:
+          type: string
+    subscribe:
+      operationId: receiveQuota
+      summary: Receive live device quota updates
+      message:
+        $ref: '#/components/messages/QuotaUpdate'
+  /open/{certificateAccount}/{sn}/status:
+    description: Device online/offline status stream.
+    parameters:
+      certificateAccount:
+        schema:
+          type: string
+      sn:
+        schema:
+          type: string
+    subscribe:
+      operationId: receiveStatus
+      summary: Receive device online/offline status
+      message:
+        $ref: '#/components/messages/StatusUpdate'
+  /open/{certificateAccount}/{sn}/set:
+    description: Command channel — publish a device function command.
+    parameters:
+      certificateAccount:
+        schema:
+          type: string
+      sn:
+        schema:
+          type: string
+    publish:
+      operationId: sendSet
+      summary: Send a device function command
+      message:
+        $ref: '#/components/messages/SetCommand'
+  /open/{certificateAccount}/{sn}/set_reply:
+    description: Acknowledgement stream for commands sent on the set topic.
+    parameters:
+      certificateAccount:
+        schema:
+          type: string
+      sn:
+        schema:
+          type: string
+    subscribe:
+      operationId: receiveSetReply
+      summary: Receive command acknowledgements
+      message:
+        $ref: '#/components/messages/SetReply'
+components:
+  messages:
+    QuotaUpdate:
+      name: quotaUpdate
+      title: Quota update
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          param:
+            type: object
+            additionalProperties: true
+            description: Map of dotted quota keys to current values.
+    StatusUpdate:
+      name: statusUpdate
+      title: Status update
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          params:
+            type: object
+            properties:
+              status:
+                type: integer
+                description: Online status (1 online, 0 offline).
+    SetCommand:
+      name: setCommand
+      title: Set command
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          id:
+            type: string
+            description: Client-generated message id (echoed in set_reply).
+          moduleType:
+            type: integer
+          operateType:
+            type: string
+          params:
+            type: object
+            additionalProperties: true
+    SetReply:
+      name: setReply
+      title: Set reply
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          id:
+            type: string
+          data:
+            type: object
+            additionalProperties: true

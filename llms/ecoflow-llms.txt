@@ -1,0 +1,26 @@
+# EcoFlow
+
+> EcoFlow is a portable power and home energy-storage company. Its EcoFlow IoT Open Platform (developer.ecoflow.com) is an HTTP + MQTT API to discover EcoFlow devices bound to a user account, read and stream live device telemetry ("quota" property values), and send device function commands. Authentication uses an accessKey/secretKey pair with an HMAC-SHA256 request signature. A global/US region (api.ecoflow.com) and a Europe region (api-e.ecoflow.com) are kept strictly separate.
+
+## APIs
+- [EcoFlow IoT Open Platform](https://developer.ecoflow.com): HTTP device discovery, quota read, device commands, and MQTT certificate.
+
+## Specs
+- [OpenAPI (HTTP)](openapi/ecoflow-iot-openapi.yml): getDeviceList, getAllQuota, getQuota, setQuota, getMqttCertification.
+- [AsyncAPI (MQTT)](asyncapi/ecoflow-mqtt-asyncapi.yml): quota, status, set, set_reply topics over mqtts.
+
+## Reference
+- [Authentication](authentication/ecoflow-authentication.yml): accessKey/nonce/timestamp/sign HMAC-SHA256 headers.
+- [Conventions](conventions/ecoflow-conventions.yml): signing, envelope, regions, realtime, no idempotency/pagination.
+- [Errors](errors/ecoflow-problem-types.yml): code/message/data envelope, "0" = success.
+- [Data model](data-model/ecoflow-data-model.yml): Device, Quota, MqttCertificate.
+- [Lifecycle](lifecycle/ecoflow-lifecycle.yml): uri-path versioning under /iot-open/sign/.
+- [Conformance](conformance/ecoflow-conformance.yml): MQTT + HMAC signing; not OAuth2/OIDC/RFC9457.
+
+## Agent
+- [MCP (candidate)](mcp/ecoflow-mcp.yml): five tools mapped to the HTTP operations.
+- [Agent Skills](skills/_index.yml): read-device-status, control-ac-output, stream-telemetry-mqtt.
+
+## Docs
+- [Developer Portal](https://developer.ecoflow.com)
+- [EcoFlow](https://ecoflow.com)

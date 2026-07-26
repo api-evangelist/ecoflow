@@ -1,8 +1,18 @@
 aid: ecoflow
 name: EcoFlow
-description: 'EcoFlow is a company surfaced as a portfolio company of hongshan and added to the API Evangelist
-  network as a stub for enrichment. Sector: technology. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: >-
+  EcoFlow is a portable power and home energy-storage company known for its
+  Delta and River portable power stations, PowerStream balcony micro-inverter,
+  Power Kits, smart generators, whole-home backup systems and solar panels. For
+  developers it operates the EcoFlow IoT Open Platform (developer.ecoflow.com),
+  an HTTP + MQTT API that lets applications discover the EcoFlow devices bound to
+  a user account, read live device telemetry ("quota" property values such as
+  battery state of charge, input/output watts, temperatures and switch states),
+  send device function commands, and stream real-time updates over MQTT. Access
+  is authenticated with an accessKey / secretKey pair from the developer console
+  and an HMAC-SHA256 request signature. The platform serves both a global/US
+  region (api.ecoflow.com) and a separate Europe region (api-e.ecoflow.com),
+  reflecting EcoFlow's strict per-region account separation.
 url: https://raw.githubusercontent.com/api-evangelist/ecoflow/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,18 +20,119 @@ x-backed-by:
 - hongshan
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
+image: https://cdn-fe.ecoflow.com/ef-open-platform/logo192.png
 tags:
 - Company
 - Technology
-apis: []
+- Energy
+- Energy Storage
+- Portable Power
+- IoT
+- Smart Home
+- Solar
+- Developer API
+apis:
+- aid: ecoflow:ecoflow-devices-api
+  name: EcoFlow Devices API
+  description: Device discovery and binding
+  humanURL: https://developer.ecoflow.com
+  baseURL: https://api.ecoflow.com
+  tags:
+  - Devices
+  properties:
+  - type: OpenAPI
+    url: openapi/ecoflow-devices-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ecoflow.com
+  - type: AsyncAPI
+    url: asyncapi/ecoflow-mqtt-asyncapi.yml
+- aid: ecoflow:ecoflow-mqtt-api
+  name: EcoFlow MQTT API
+  description: Obtain MQTT streaming/command certificate
+  humanURL: https://developer.ecoflow.com
+  baseURL: https://api.ecoflow.com
+  tags:
+  - MQTT
+  properties:
+  - type: OpenAPI
+    url: openapi/ecoflow-mqtt-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ecoflow.com
+  - type: AsyncAPI
+    url: asyncapi/ecoflow-mqtt-asyncapi.yml
+- aid: ecoflow:ecoflow-quota-api
+  name: EcoFlow Quota API
+  description: Read device property (quota) values and send device function commands
+  humanURL: https://developer.ecoflow.com
+  baseURL: https://api.ecoflow.com
+  tags:
+  - Quota
+  properties:
+  - type: OpenAPI
+    url: openapi/ecoflow-quota-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ecoflow.com
+  - type: AsyncAPI
+    url: asyncapi/ecoflow-mqtt-asyncapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/ecoflow-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/ecoflow-agentic-access.yml
+- type: Authentication
+  url: authentication/ecoflow-authentication.yml
 - type: Website
   url: https://ecoflow.com
+- type: DeveloperPortal
+  url: https://developer.ecoflow.com
+- type: Documentation
+  url: https://developer.ecoflow.com
+- type: GettingStarted
+  url: https://developer.ecoflow.com
+- type: Support
+  url: https://developer.ecoflow.com
+- type: Blog
+  url: https://www.ecoflow.com/us/blog
+- type: AsyncAPI
+  url: asyncapi/ecoflow-mqtt-asyncapi.yml
+- type: MCPServer
+  url: mcp/ecoflow-mcp.yml
+- type: LLMsTxt
+  url: llms/ecoflow-llms.txt
+- type: Conformance
+  url: conformance/ecoflow-conformance.yml
+- type: Lifecycle
+  url: lifecycle/ecoflow-lifecycle.yml
+- type: ErrorCatalog
+  url: errors/ecoflow-problem-types.yml
+- type: Conventions
+  url: conventions/ecoflow-conventions.yml
+- type: DataModel
+  url: data-model/ecoflow-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

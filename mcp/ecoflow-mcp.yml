@@ -1,0 +1,28 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/ecoflow-iot-openapi.yml
+note: >-
+  No official EcoFlow-hosted MCP server was found. This is a candidate tool list
+  derived one-to-one from the EcoFlow IoT Open Platform OpenAPI operations, for
+  forging an MCP server that wraps the HTTP API (accessKey/secretKey signing
+  handled by the server).
+server:
+  name: ecoflow-iot
+  transport: http
+tools:
+  - name: list_devices
+    description: List the EcoFlow devices bound to the account.
+    source_operation: openapi/ecoflow-iot-openapi.yml#getDeviceList
+  - name: get_all_quota
+    description: Get a full snapshot of a device's quota (property) values.
+    source_operation: openapi/ecoflow-iot-openapi.yml#getAllQuota
+  - name: get_quota
+    description: Get selected quota values for a device.
+    source_operation: openapi/ecoflow-iot-openapi.yml#getQuota
+  - name: set_quota
+    description: Send a device function command (set a quota/function parameter).
+    source_operation: openapi/ecoflow-iot-openapi.yml#setQuota
+  - name: get_mqtt_certification
+    description: Get MQTT broker host and credentials for real-time streaming.
+    source_operation: openapi/ecoflow-iot-openapi.yml#getMqttCertification

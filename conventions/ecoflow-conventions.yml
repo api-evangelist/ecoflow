@@ -1,0 +1,59 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/ecoflow-iot-openapi.yml
+summary: >-
+  Cross-cutting request/response semantics for the EcoFlow IoT Open Platform,
+  derived from the HTTP OpenAPI and MQTT AsyncAPI plus the documented signing
+  scheme. EcoFlow uses a signed-header authentication model, a uniform
+  code/message/data response envelope, and product-specific "quota" property
+  maps rather than typed resource models.
+authentication:
+  style: signed-headers
+  scheme: HMAC-SHA256
+  headers:
+    - accessKey
+    - nonce
+    - timestamp
+    - sign
+  detail: >-
+    Every request carries accessKey, a per-request nonce, a millisecond
+    timestamp, and a sign header. sign is the hex HMAC-SHA256, keyed by the
+    secretKey, over the ASCII-sorted request parameters concatenated with
+    accessKey, nonce and timestamp.
+  cross_ref: authentication/ecoflow-authentication.yml
+idempotency:
+  supported: false
+  detail: >-
+    EcoFlow does not document an idempotency-key header for the HTTP API. The
+    per-request nonce prevents replay but is not an idempotency contract; command
+    (setQuota / MQTT set) requests are not documented as idempotent.
+pagination:
+  supported: false
+  detail: List endpoints (device/list) return the full bound-device set without paging.
+error_envelope:
+  shape: '{ code, message, data }'
+  success_code: '0'
+  detail: >-
+    All responses share one envelope. code is a string; "0" means success and
+    any other value indicates an error described by message. See
+    errors/ecoflow-problem-types.yml.
+  cross_ref: errors/ecoflow-problem-types.yml
+regions:
+  detail: >-
+    Accounts and data are strictly separated by region. Use api.ecoflow.com /
+    mqtt.ecoflow.com for global/US accounts and api-e.ecoflow.com /
+    mqtt-e.ecoflow.com for Europe accounts.
+versioning:
+  style: uri-path
+  detail: Endpoints live under the /iot-open/sign/ path prefix.
+  cross_ref: lifecycle/ecoflow-lifecycle.yml
+realtime:
+  transport: mqtt
+  detail: >-
+    Live telemetry and command delivery use MQTT over TLS (port 8883). Obtain
+    broker host and credentials from getMqttCertification, then subscribe to
+    /open/{certificateAccount}/{sn}/quota and /status and publish to /set.
+  cross_ref: asyncapi/ecoflow-mqtt-asyncapi.yml
+rate_limiting:
+  documented: false
+  detail: No published rate-limit headers or quotas were found in the developer docs.

@@ -1,0 +1,32 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/ecoflow-iot-openapi.yml
+note: >-
+  EcoFlow's model is device-centric with product-specific "quota" property maps
+  rather than a rich set of typed resources. Entities and relationships below are
+  derived from the OpenAPI operations and MQTT topic structure.
+entities:
+  - name: Device
+    description: An EcoFlow device bound to the account, keyed by serial number (sn).
+    key: sn
+    fields: [sn, productName, online]
+  - name: Quota
+    description: >-
+      A flat map of dotted property keys (e.g. pd.soc, inv.outputWatts) to the
+      device's current values; shape varies by product line.
+    key: null
+  - name: MqttCertificate
+    description: >-
+      Per-account MQTT broker connection credentials (url, port, protocol,
+      certificateAccount, certificatePassword).
+    key: certificateAccount
+relationships:
+  - from: Quota
+    to: Device
+    type: belongs_to
+    via: sn
+  - from: MqttCertificate
+    to: Device
+    type: has_many
+    via: certificateAccount
+    detail: One account certificate streams all bound devices via per-sn topics.

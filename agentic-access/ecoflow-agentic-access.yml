@@ -1,0 +1,78 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/ecoflow-iot-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 5
+  by_action_class:
+    connected: 3
+    acting: 2
+  by_consequence:
+    read: 3
+    write: 2
+  human_in_the_loop_required: 0
+operations:
+- path: /iot-open/sign/device/list
+  method: get
+  operationId: getDeviceList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iot-open/sign/device/quota/all
+  method: get
+  operationId: getAllQuota
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /iot-open/sign/device/quota
+  method: post
+  operationId: getQuota
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iot-open/sign/device/quota
+  method: put
+  operationId: setQuota
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /iot-open/sign/certification
+  method: get
+  operationId: getMqttCertification
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none

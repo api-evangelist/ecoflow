@@ -1,0 +1,362 @@
+openapi: 3.0.3
+info:
+  title: EcoFlow IoT Open Platform API
+  description: >-
+    The EcoFlow IoT Open Platform (developer.ecoflow.com) HTTP API lets
+    registered developers read telemetry from and send control commands to
+    EcoFlow devices (portable power stations, Delta/River series, PowerStream
+    micro-inverters, smart plugs, Power Kits and more) that are bound to a user
+    account. Access is authenticated with an accessKey / secretKey pair issued
+    in the developer console; every request carries an HMAC-SHA256 `sign` header
+    computed over the sorted request parameters plus `accessKey`, `nonce` and
+    `timestamp`. Real-time streaming and command delivery is handled over MQTT
+    (see the companion AsyncAPI); this HTTP surface covers device discovery, a
+    snapshot of all device "quota" (property) values, targeted quota queries,
+    device function commands, and retrieval of the MQTT connection certificate.
+  version: '1.0'
+  contact:
+    name: EcoFlow Developer Platform
+    url: https://developer.ecoflow.com
+  x-source: >-
+    Endpoint surface, headers and signing verified from EcoFlow developer
+    portal (developer.ecoflow.com / developer-eu.ecoflow.com) and independent
+    public-API client implementations (github.com/tolwi/hassio-ecoflow-cloud).
+servers:
+  - url: https://api.ecoflow.com
+    description: Global / US region
+  - url: https://api-e.ecoflow.com
+    description: Europe region
+tags:
+  - name: Devices
+    description: Device discovery and binding
+  - name: Quota
+    description: Read device property (quota) values and send device function commands
+  - name: MQTT
+    description: Obtain MQTT streaming/command certificate
+paths:
+  /iot-open/sign/device/list:
+    get:
+      operationId: getDeviceList
+      summary: List bound devices
+      description: >-
+        Returns the list of EcoFlow devices bound to the account that owns the
+        accessKey, including each device serial number (sn), product name and
+        online status.
+      tags:
+        - Devices
+      responses:
+        '200':
+          description: Device list retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceListResponse'
+              example:
+                code: '0'
+                message: Success
+                data:
+                  - sn: R331ZEB4ZEAL0000
+                    productName: DELTA 2
+                    online: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /iot-open/sign/device/quota/all:
+    get:
+      operationId: getAllQuota
+      summary: Get all quota for a device
+      description: >-
+        Returns a full snapshot of every property ("quota") value the specified
+        device currently reports (battery %, input/output watts, switch states,
+        temperatures, etc.). The `data` object is a flat map of dotted quota
+        keys to values and varies by product line.
+      tags:
+        - Quota
+      parameters:
+        - name: sn
+          in: query
+          required: true
+          description: Device serial number
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Quota snapshot retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuotaResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /iot-open/sign/device/quota:
+    post:
+      operationId: getQuota
+      summary: Get selected quota values
+      description: >-
+        Returns only the requested property ("quota") values for a device.
+        Supply the device serial and the list of dotted quota keys to read.
+      tags:
+        - Quota
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetQuotaRequest'
+            example:
+              sn: R331ZEB4ZEAL0000
+              params:
+                quotas:
+                  - pd.soc
+                  - inv.outputWatts
+      responses:
+        '200':
+          description: Selected quota retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuotaResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      operationId: setQuota
+      summary: Set a device function (command)
+      description: >-
+        Sends a control command to a device by setting one or more of its
+        function parameters. The `moduleType`, `operateType` and `params` shape
+        is product-specific (e.g. set AC output on/off, set charge speed, set
+        buzzer). Commands are also deliverable over the MQTT `set` topic.
+      tags:
+        - Quota
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetQuotaRequest'
+            example:
+              sn: R331ZEB4ZEAL0000
+              moduleType: 1
+              operateType: acOutCfg
+              params:
+                enabled: 1
+      responses:
+        '200':
+          description: Command accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandResponse'
+              example:
+                code: '0'
+                message: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /iot-open/sign/certification:
+    get:
+      operationId: getMqttCertification
+      summary: Get MQTT certificate
+      description: >-
+        Returns the MQTT broker connection parameters (broker url, port,
+        protocol) and per-account credentials (certificateAccount /
+        certificatePassword) used to subscribe to device quota/status streams
+        and publish set commands over MQTT.
+      tags:
+        - MQTT
+      responses:
+        '200':
+          description: MQTT certificate retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificationResponse'
+              example:
+                code: '0'
+                message: Success
+                data:
+                  url: mqtt.ecoflow.com
+                  port: '8883'
+                  protocol: mqtts
+                  certificateAccount: open-abc123
+                  certificatePassword: '********'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  securitySchemes:
+    accessKey:
+      type: apiKey
+      in: header
+      name: accessKey
+      description: Access key issued in the EcoFlow developer console.
+    nonce:
+      type: apiKey
+      in: header
+      name: nonce
+      description: Random nonce (typically a 6-digit number) regenerated per request.
+    timestamp:
+      type: apiKey
+      in: header
+      name: timestamp
+      description: Unix timestamp in milliseconds at request time.
+    sign:
+      type: apiKey
+      in: header
+      name: sign
+      description: >-
+        HMAC-SHA256 signature (hex) over the ASCII-sorted request parameters
+        concatenated with `accessKey`, `nonce` and `timestamp`, keyed by the
+        secretKey.
+  responses:
+    BadRequest:
+      description: Invalid request (bad parameters or malformed signature)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: '6001'
+            message: Parameter error
+    Unauthorized:
+      description: Authentication failed (bad accessKey, expired timestamp, or sign mismatch)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: '7000'
+            message: Signature verification failed
+    ServerError:
+      description: Server-side error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: '500'
+            message: System error
+  schemas:
+    Envelope:
+      type: object
+      description: Standard EcoFlow response envelope.
+      properties:
+        code:
+          type: string
+          description: Result code; "0" indicates success, any other value is an error.
+        message:
+          type: string
+          description: Human-readable result message.
+      required:
+        - code
+        - message
+    Device:
+      type: object
+      properties:
+        sn:
+          type: string
+          description: Device serial number.
+        productName:
+          type: string
+          description: Product model name.
+        online:
+          type: integer
+          description: Online status (1 online, 0 offline).
+    DeviceListResponse:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Device'
+    QuotaResponse:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            data:
+              type: object
+              additionalProperties: true
+              description: Flat map of dotted quota keys to their current values.
+    GetQuotaRequest:
+      type: object
+      required:
+        - sn
+        - params
+      properties:
+        sn:
+          type: string
+          description: Device serial number.
+        params:
+          type: object
+          properties:
+            quotas:
+              type: array
+              items:
+                type: string
+              description: Dotted quota keys to read (e.g. pd.soc).
+    SetQuotaRequest:
+      type: object
+      required:
+        - sn
+      properties:
+        sn:
+          type: string
+          description: Device serial number.
+        moduleType:
+          type: integer
+          description: Target module type (product-specific).
+        operateType:
+          type: string
+          description: Operation/command name (product-specific).
+        params:
+          type: object
+          additionalProperties: true
+          description: Command parameters (product-specific).
+    CommandResponse:
+      $ref: '#/components/schemas/Envelope'
+    CertificationResponse:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: MQTT broker hostname.
+                port:
+                  type: string
+                  description: MQTT broker port (typically 8883 for mqtts).
+                protocol:
+                  type: string
+                  description: MQTT protocol (mqtts).
+                certificateAccount:
+                  type: string
+                  description: MQTT username for this account.
+                certificatePassword:
+                  type: string
+                  description: MQTT password for this account.
+    ErrorResponse:
+      $ref: '#/components/schemas/Envelope'
+security:
+  - accessKey: []
+    nonce: []
+    timestamp: []
+    sign: []

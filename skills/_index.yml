@@ -1,0 +1,16 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/ecoflow-iot-openapi.yml
+skills:
+  - file: ecoflow-read-device-status.md
+    name: Read EcoFlow device status
+    api: openapi/ecoflow-iot-openapi.yml
+    operations: [getDeviceList, getAllQuota]
+  - file: ecoflow-control-ac-output.md
+    name: Turn an EcoFlow device AC output on or off
+    api: openapi/ecoflow-iot-openapi.yml
+    operations: [getDeviceList, setQuota]
+  - file: ecoflow-stream-telemetry-mqtt.md
+    name: Stream EcoFlow device telemetry over MQTT
+    api: openapi/ecoflow-iot-openapi.yml
+    operations: [getMqttCertification]

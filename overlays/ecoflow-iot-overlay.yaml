@@ -1,0 +1,19 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for EcoFlow IoT Open Platform
+  version: 1.0.0
+extends: openapi/ecoflow-iot-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: true
+      x-apievangelist-realtime: asyncapi/ecoflow-mqtt-asyncapi.yml
+      x-apievangelist-conventions: conventions/ecoflow-conventions.yml
+  - target: $.tags
+    update:
+      - name: Devices
+        x-agent-readiness: read
+      - name: Quota
+        x-agent-readiness: acting
+      - name: MQTT
+        x-agent-readiness: connect
