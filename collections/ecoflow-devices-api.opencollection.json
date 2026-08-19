@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "EcoFlow IoT Open Platform Devices API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "accessKey",
+      "value": "{{accessKey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Devices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List bound devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ecoflow.com/iot-open/sign/device/list"
+          },
+          "docs": "Returns the list of EcoFlow devices bound to the account that owns the accessKey, including each device serial number (sn), product name and online status."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,221 @@
+{
+  "item": [
+    {
+      "id": "e76d8f36-3327-4bd7-a766-fa3a5e0aa285",
+      "name": "MQTT",
+      "description": {
+        "content": "Obtain MQTT streaming/command certificate",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e8fb1f46-e887-4e74-acf7-a2a83e3d8f45",
+          "name": "Get MQTT certificate",
+          "request": {
+            "name": "Get MQTT certificate",
+            "description": {
+              "content": "Returns the MQTT broker connection parameters (broker url, port, protocol) and per-account credentials (certificateAccount / certificatePassword) used to subscribe to device quota/status streams and publish set commands over MQTT.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iot-open",
+                "sign",
+                "certification"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "abff213c-6f98-4772-b238-9b8f4d25adb8",
+              "name": "MQTT certificate retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "certification"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"0\",\n  \"message\": \"Success\",\n  \"data\": {\n    \"url\": \"mqtt.ecoflow.com\",\n    \"port\": \"8883\",\n    \"protocol\": \"mqtts\",\n    \"certificateAccount\": \"open-abc123\",\n    \"certificatePassword\": \"********\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90aa0c75-f603-46ef-9281-5e8dfcdaa0e8",
+              "name": "Authentication failed (bad accessKey, expired timestamp, or sign mismatch)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "certification"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"7000\",\n  \"message\": \"Signature verification failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df23b977-7646-4fb4-a237-e5c51ec33449",
+              "name": "Server-side error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "certification"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"500\",\n  \"message\": \"System error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ecoflow.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "accessKey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5d17beb0-dbcd-45c5-912c-aa26e30ab228",
+    "name": "EcoFlow IoT Open Platform Devices MQTT API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The EcoFlow IoT Open Platform (developer.ecoflow.com) HTTP API lets registered developers read telemetry from and send control commands to EcoFlow devices (portable power stations, Delta/River series, PowerStream micro-inverters, smart plugs, Power Kits and more) that are bound to a user account. Access is authenticated with an accessKey / secretKey pair issued in the developer console; every request carries an HMAC-SHA256 `sign` header computed over the sorted request parameters plus `accessKey`, `nonce` and `timestamp`. Real-time streaming and command delivery is handled over MQTT (see the companion AsyncAPI); this HTTP surface covers device discovery, a snapshot of all device \"quota\" (property) values, targeted quota queries, device function commands, and retrieval of the MQTT connection certificate.\n\nContact Support:\n Name: EcoFlow Developer Platform",
+      "type": "text/plain"
+    }
+  }
+}

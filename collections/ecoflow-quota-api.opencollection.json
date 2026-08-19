@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "EcoFlow IoT Open Platform Devices Quota API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "accessKey",
+      "value": "{{accessKey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Quota",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all quota for a device",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ecoflow.com/iot-open/sign/device/quota/all",
+            "params": [
+              {
+                "name": "sn",
+                "value": "",
+                "type": "query",
+                "description": "Device serial number"
+              }
+            ]
+          },
+          "docs": "Returns a full snapshot of every property (\"quota\") value the specified device currently reports (battery %, input/output watts, switch states, temperatures, etc.). The `data` object is a flat map of dotted quota keys to values and varies by product line."
+        },
+        {
+          "info": {
+            "name": "Get selected quota values",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ecoflow.com/iot-open/sign/device/quota",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns only the requested property (\"quota\") values for a device. Supply the device serial and the list of dotted quota keys to read."
+        },
+        {
+          "info": {
+            "name": "Set a device function (command)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.ecoflow.com/iot-open/sign/device/quota",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a control command to a device by setting one or more of its function parameters. The `moduleType`, `operateType` and `params` shape is product-specific (e.g. set AC output on/off, set charge speed, set buzzer). Commands are also deliverable over the MQTT `set` topic."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

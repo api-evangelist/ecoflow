@@ -1,0 +1,837 @@
+{
+  "item": [
+    {
+      "id": "01173c9c-c08c-49c0-8906-c9232499df2e",
+      "name": "Quota",
+      "description": {
+        "content": "Read device property (quota) values and send device function commands",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ea0318ff-fa55-466a-8d1d-c88af51cda1a",
+          "name": "Get all quota for a device",
+          "request": {
+            "name": "Get all quota for a device",
+            "description": {
+              "content": "Returns a full snapshot of every property (\"quota\") value the specified device currently reports (battery %, input/output watts, switch states, temperatures, etc.). The `data` object is a flat map of dotted quota keys to values and varies by product line.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iot-open",
+                "sign",
+                "device",
+                "quota",
+                "all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sn",
+                  "value": "<string>",
+                  "description": "(Required) Device serial number"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "042d2518-4ef8-46f7-8d66-f7cb06cdb34b",
+              "name": "Quota snapshot retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "device",
+                    "quota",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sn",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"data\": {\n    \"key_0\": 242,\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89dea0b5-5c62-4bc4-b921-7fc2d1e95c81",
+              "name": "Invalid request (bad parameters or malformed signature)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "device",
+                    "quota",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sn",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"6001\",\n  \"message\": \"Parameter error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cfe259e-9fee-4c85-98b8-f97aa2106273",
+              "name": "Authentication failed (bad accessKey, expired timestamp, or sign mismatch)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "device",
+                    "quota",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sn",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"7000\",\n  \"message\": \"Signature verification failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e11d9aac-c006-442a-a759-02202728fda5",
+              "name": "Server-side error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "device",
+                    "quota",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sn",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"500\",\n  \"message\": \"System error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "23a08101-11ea-4982-b36e-c487dd36e8bd",
+          "name": "Get selected quota values",
+          "request": {
+            "name": "Get selected quota values",
+            "description": {
+              "content": "Returns only the requested property (\"quota\") values for a device. Supply the device serial and the list of dotted quota keys to read.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iot-open",
+                "sign",
+                "device",
+                "quota"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sn\": \"<string>\",\n  \"params\": {\n    \"quotas\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2ca34e51-ea13-419e-8291-fc4e6afa8d6e",
+              "name": "Selected quota retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "device",
+                    "quota"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sn\": \"R331ZEB4ZEAL0000\",\n  \"params\": {\n    \"quotas\": [\n      \"pd.soc\",\n      \"inv.outputWatts\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"data\": {\n    \"key_0\": 242,\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0dceb006-cd13-43f6-b916-949c34f7584e",
+              "name": "Invalid request (bad parameters or malformed signature)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "device",
+                    "quota"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sn\": \"R331ZEB4ZEAL0000\",\n  \"params\": {\n    \"quotas\": [\n      \"pd.soc\",\n      \"inv.outputWatts\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"6001\",\n  \"message\": \"Parameter error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ec06405-23bc-446d-aeef-c9418c914a62",
+              "name": "Authentication failed (bad accessKey, expired timestamp, or sign mismatch)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "device",
+                    "quota"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sn\": \"R331ZEB4ZEAL0000\",\n  \"params\": {\n    \"quotas\": [\n      \"pd.soc\",\n      \"inv.outputWatts\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"7000\",\n  \"message\": \"Signature verification failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "314f4f4e-7b48-4d3c-ac95-6c6264e10786",
+              "name": "Server-side error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "device",
+                    "quota"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sn\": \"R331ZEB4ZEAL0000\",\n  \"params\": {\n    \"quotas\": [\n      \"pd.soc\",\n      \"inv.outputWatts\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"500\",\n  \"message\": \"System error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c4103a0-73a9-4237-a123-9fc09de4b4bd",
+          "name": "Set a device function (command)",
+          "request": {
+            "name": "Set a device function (command)",
+            "description": {
+              "content": "Sends a control command to a device by setting one or more of its function parameters. The `moduleType`, `operateType` and `params` shape is product-specific (e.g. set AC output on/off, set charge speed, set buzzer). Commands are also deliverable over the MQTT `set` topic.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "iot-open",
+                "sign",
+                "device",
+                "quota"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sn\": \"<string>\",\n  \"moduleType\": \"<integer>\",\n  \"operateType\": \"<string>\",\n  \"params\": {\n    \"key_0\": 3612,\n    \"key_1\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6cae0405-9b41-469d-83bf-60df1ffa5d76",
+              "name": "Command accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "device",
+                    "quota"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sn\": \"R331ZEB4ZEAL0000\",\n  \"moduleType\": 1,\n  \"operateType\": \"acOutCfg\",\n  \"params\": {\n    \"enabled\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"0\",\n  \"message\": \"Success\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2381a058-c501-4524-957e-eae5ee53a232",
+              "name": "Invalid request (bad parameters or malformed signature)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "device",
+                    "quota"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sn\": \"R331ZEB4ZEAL0000\",\n  \"moduleType\": 1,\n  \"operateType\": \"acOutCfg\",\n  \"params\": {\n    \"enabled\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"6001\",\n  \"message\": \"Parameter error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7f87e6f-af00-4bc1-a575-355aaf9da4e0",
+              "name": "Authentication failed (bad accessKey, expired timestamp, or sign mismatch)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "device",
+                    "quota"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sn\": \"R331ZEB4ZEAL0000\",\n  \"moduleType\": 1,\n  \"operateType\": \"acOutCfg\",\n  \"params\": {\n    \"enabled\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"7000\",\n  \"message\": \"Signature verification failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "626ca696-8d62-4f5d-b403-b6eef180f08d",
+              "name": "Server-side error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "iot-open",
+                    "sign",
+                    "device",
+                    "quota"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "accessKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sn\": \"R331ZEB4ZEAL0000\",\n  \"moduleType\": 1,\n  \"operateType\": \"acOutCfg\",\n  \"params\": {\n    \"enabled\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"500\",\n  \"message\": \"System error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ecoflow.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "accessKey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5305864b-ce15-40c8-bc45-4e2487dff84e",
+    "name": "EcoFlow IoT Open Platform Devices Quota API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The EcoFlow IoT Open Platform (developer.ecoflow.com) HTTP API lets registered developers read telemetry from and send control commands to EcoFlow devices (portable power stations, Delta/River series, PowerStream micro-inverters, smart plugs, Power Kits and more) that are bound to a user account. Access is authenticated with an accessKey / secretKey pair issued in the developer console; every request carries an HMAC-SHA256 `sign` header computed over the sorted request parameters plus `accessKey`, `nonce` and `timestamp`. Real-time streaming and command delivery is handled over MQTT (see the companion AsyncAPI); this HTTP surface covers device discovery, a snapshot of all device \"quota\" (property) values, targeted quota queries, device function commands, and retrieval of the MQTT connection certificate.\n\nContact Support:\n Name: EcoFlow Developer Platform",
+      "type": "text/plain"
+    }
+  }
+}
