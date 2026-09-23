@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: EcoFlow IoT Open Platform Devices MQTT API
-  description: The EcoFlow IoT Open Platform (developer.ecoflow.com) HTTP API lets registered developers read telemetry from and send control commands to EcoFlow devices (portable power stations, Delta/River series, PowerStream micro-inverters, smart plugs, Power Kits and more) that are bound to a user account. Access is authenticated with an accessKey / secretKey pair issued in the developer console; every request carries an HMAC-SHA256 `sign` header computed over the sorted request parameters plus `accessKey`, `nonce` and `timestamp`. Real-time streaming and command delivery is handled over MQTT (see the companion AsyncAPI); this HTTP surface covers device discovery, a snapshot of all device "quota" (property) values, targeted quota queries, device function commands, and retrieval of the MQTT connection certificate.
+  title: EcoFlow IoT Open Platform MQTT API
+  description: The EcoFlow IoT Open Platform (developer.ecoflow.com) HTTP API lets registered developers read telemetry from and send control commands to EcoFlow devices (portable power stations, Delta/River series, PowerStream micro-inverters, smart plugs, Power Kits and more) that are bound to a user account.
   version: '1.0'
   contact:
     name: EcoFlow Developer Platform
@@ -49,7 +49,41 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
+  responses:
+    ServerError:
+      description: Server-side error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: '500'
+            message: System error
+    Unauthorized:
+      description: Authentication failed (bad accessKey, expired timestamp, or sign mismatch)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: '7000'
+            message: Signature verification failed
   schemas:
+    Envelope:
+      type: object
+      description: Standard EcoFlow response envelope.
+      properties:
+        code:
+          type: string
+          description: Result code; "0" indicates success, any other value is an error.
+        message:
+          type: string
+          description: Human-readable result message.
+      required:
+      - code
+      - message
+    ErrorResponse:
+      $ref: '#/components/schemas/Envelope'
     CertificationResponse:
       allOf:
       - $ref: '#/components/schemas/Envelope'
@@ -73,40 +107,6 @@ components:
               certificatePassword:
                 type: string
                 description: MQTT password for this account.
-    Envelope:
-      type: object
-      description: Standard EcoFlow response envelope.
-      properties:
-        code:
-          type: string
-          description: Result code; "0" indicates success, any other value is an error.
-        message:
-          type: string
-          description: Human-readable result message.
-      required:
-      - code
-      - message
-    ErrorResponse:
-      $ref: '#/components/schemas/Envelope'
-  responses:
-    Unauthorized:
-      description: Authentication failed (bad accessKey, expired timestamp, or sign mismatch)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            code: '7000'
-            message: Signature verification failed
-    ServerError:
-      description: Server-side error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            code: '500'
-            message: System error
   securitySchemes:
     accessKey:
       type: apiKey
