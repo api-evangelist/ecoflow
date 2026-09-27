@@ -58,6 +58,7 @@ tags:
 - Smart Home
 - Solar
 - Developer API
+- Real-Time
 apis:
 - aid: ecoflow:ecoflow-devices-api
   name: EcoFlow Devices API

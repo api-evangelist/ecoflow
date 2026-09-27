@@ -133,32 +133,6 @@ components:
               items:
                 type: string
               description: Dotted quota keys to read (e.g. pd.soc).
-    CommandResponse:
-      $ref: '#/components/schemas/Envelope'
-    QuotaResponse:
-      allOf:
-      - $ref: '#/components/schemas/Envelope'
-      - type: object
-        properties:
-          data:
-            type: object
-            additionalProperties: true
-            description: Flat map of dotted quota keys to their current values.
-    Envelope:
-      type: object
-      description: Standard EcoFlow response envelope.
-      properties:
-        code:
-          type: string
-          description: Result code; "0" indicates success, any other value is an error.
-        message:
-          type: string
-          description: Human-readable result message.
-      required:
-      - code
-      - message
-    ErrorResponse:
-      $ref: '#/components/schemas/Envelope'
     SetQuotaRequest:
       type: object
       required:
@@ -177,6 +151,32 @@ components:
           type: object
           additionalProperties: true
           description: Command parameters (product-specific).
+    Envelope:
+      type: object
+      description: Standard EcoFlow response envelope.
+      properties:
+        code:
+          type: string
+          description: Result code; "0" indicates success, any other value is an error.
+        message:
+          type: string
+          description: Human-readable result message.
+      required:
+      - code
+      - message
+    QuotaResponse:
+      allOf:
+      - $ref: '#/components/schemas/Envelope'
+      - type: object
+        properties:
+          data:
+            type: object
+            additionalProperties: true
+            description: Flat map of dotted quota keys to their current values.
+    CommandResponse:
+      $ref: '#/components/schemas/Envelope'
+    ErrorResponse:
+      $ref: '#/components/schemas/Envelope'
   responses:
     ServerError:
       description: Server-side error

@@ -49,41 +49,7 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
-  responses:
-    ServerError:
-      description: Server-side error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            code: '500'
-            message: System error
-    Unauthorized:
-      description: Authentication failed (bad accessKey, expired timestamp, or sign mismatch)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            code: '7000'
-            message: Signature verification failed
   schemas:
-    Envelope:
-      type: object
-      description: Standard EcoFlow response envelope.
-      properties:
-        code:
-          type: string
-          description: Result code; "0" indicates success, any other value is an error.
-        message:
-          type: string
-          description: Human-readable result message.
-      required:
-      - code
-      - message
-    ErrorResponse:
-      $ref: '#/components/schemas/Envelope'
     CertificationResponse:
       allOf:
       - $ref: '#/components/schemas/Envelope'
@@ -107,6 +73,40 @@ components:
               certificatePassword:
                 type: string
                 description: MQTT password for this account.
+    Envelope:
+      type: object
+      description: Standard EcoFlow response envelope.
+      properties:
+        code:
+          type: string
+          description: Result code; "0" indicates success, any other value is an error.
+        message:
+          type: string
+          description: Human-readable result message.
+      required:
+      - code
+      - message
+    ErrorResponse:
+      $ref: '#/components/schemas/Envelope'
+  responses:
+    ServerError:
+      description: Server-side error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: '500'
+            message: System error
+    Unauthorized:
+      description: Authentication failed (bad accessKey, expired timestamp, or sign mismatch)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: '7000'
+            message: Signature verification failed
   securitySchemes:
     accessKey:
       type: apiKey
