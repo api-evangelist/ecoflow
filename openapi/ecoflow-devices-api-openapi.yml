@@ -48,6 +48,17 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   schemas:
+    ErrorResponse:
+      $ref: '#/components/schemas/Envelope'
+    DeviceListResponse:
+      allOf:
+      - $ref: '#/components/schemas/Envelope'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/Device'
     Device:
       type: object
       properties:
@@ -73,27 +84,7 @@ components:
       required:
       - code
       - message
-    DeviceListResponse:
-      allOf:
-      - $ref: '#/components/schemas/Envelope'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/Device'
-    ErrorResponse:
-      $ref: '#/components/schemas/Envelope'
   responses:
-    Unauthorized:
-      description: Authentication failed (bad accessKey, expired timestamp, or sign mismatch)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            code: '7000'
-            message: Signature verification failed
     ServerError:
       description: Server-side error
       content:
@@ -103,6 +94,15 @@ components:
           example:
             code: '500'
             message: System error
+    Unauthorized:
+      description: Authentication failed (bad accessKey, expired timestamp, or sign mismatch)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: '7000'
+            message: Signature verification failed
   securitySchemes:
     accessKey:
       type: apiKey
