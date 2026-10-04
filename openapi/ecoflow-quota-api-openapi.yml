@@ -118,34 +118,6 @@ components:
   schemas:
     ErrorResponse:
       $ref: '#/components/schemas/Envelope'
-    CommandResponse:
-      $ref: '#/components/schemas/Envelope'
-    QuotaResponse:
-      allOf:
-      - $ref: '#/components/schemas/Envelope'
-      - type: object
-        properties:
-          data:
-            type: object
-            additionalProperties: true
-            description: Flat map of dotted quota keys to their current values.
-    GetQuotaRequest:
-      type: object
-      required:
-      - sn
-      - params
-      properties:
-        sn:
-          type: string
-          description: Device serial number.
-        params:
-          type: object
-          properties:
-            quotas:
-              type: array
-              items:
-                type: string
-              description: Dotted quota keys to read (e.g. pd.soc).
     SetQuotaRequest:
       type: object
       required:
@@ -164,6 +136,25 @@ components:
           type: object
           additionalProperties: true
           description: Command parameters (product-specific).
+    CommandResponse:
+      $ref: '#/components/schemas/Envelope'
+    GetQuotaRequest:
+      type: object
+      required:
+      - sn
+      - params
+      properties:
+        sn:
+          type: string
+          description: Device serial number.
+        params:
+          type: object
+          properties:
+            quotas:
+              type: array
+              items:
+                type: string
+              description: Dotted quota keys to read (e.g. pd.soc).
     Envelope:
       type: object
       description: Standard EcoFlow response envelope.
@@ -177,16 +168,16 @@ components:
       required:
       - code
       - message
+    QuotaResponse:
+      allOf:
+      - $ref: '#/components/schemas/Envelope'
+      - type: object
+        properties:
+          data:
+            type: object
+            additionalProperties: true
+            description: Flat map of dotted quota keys to their current values.
   responses:
-    ServerError:
-      description: Server-side error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            code: '500'
-            message: System error
     Unauthorized:
       description: Authentication failed (bad accessKey, expired timestamp, or sign mismatch)
       content:
@@ -205,6 +196,15 @@ components:
           example:
             code: '6001'
             message: Parameter error
+    ServerError:
+      description: Server-side error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: '500'
+            message: System error
   securitySchemes:
     accessKey:
       type: apiKey

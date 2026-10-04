@@ -89,15 +89,6 @@ components:
       - code
       - message
   responses:
-    ServerError:
-      description: Server-side error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            code: '500'
-            message: System error
     Unauthorized:
       description: Authentication failed (bad accessKey, expired timestamp, or sign mismatch)
       content:
@@ -107,6 +98,15 @@ components:
           example:
             code: '7000'
             message: Signature verification failed
+    ServerError:
+      description: Server-side error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: '500'
+            message: System error
   securitySchemes:
     accessKey:
       type: apiKey
