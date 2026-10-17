@@ -48,17 +48,18 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   schemas:
-    DeviceListResponse:
-      allOf:
-      - $ref: '#/components/schemas/Envelope'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/Device'
-    ErrorResponse:
-      $ref: '#/components/schemas/Envelope'
+    Device:
+      type: object
+      properties:
+        sn:
+          type: string
+          description: Device serial number.
+        productName:
+          type: string
+          description: Product model name.
+        online:
+          type: integer
+          description: Online status (1 online, 0 offline).
     Envelope:
       type: object
       description: Standard EcoFlow response envelope.
@@ -72,28 +73,18 @@ components:
       required:
       - code
       - message
-    Device:
-      type: object
-      properties:
-        sn:
-          type: string
-          description: Device serial number.
-        productName:
-          type: string
-          description: Product model name.
-        online:
-          type: integer
-          description: Online status (1 online, 0 offline).
+    ErrorResponse:
+      $ref: '#/components/schemas/Envelope'
+    DeviceListResponse:
+      allOf:
+      - $ref: '#/components/schemas/Envelope'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/Device'
   responses:
-    Unauthorized:
-      description: Authentication failed (bad accessKey, expired timestamp, or sign mismatch)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            code: '7000'
-            message: Signature verification failed
     ServerError:
       description: Server-side error
       content:
@@ -103,6 +94,15 @@ components:
           example:
             code: '500'
             message: System error
+    Unauthorized:
+      description: Authentication failed (bad accessKey, expired timestamp, or sign mismatch)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: '7000'
+            message: Signature verification failed
   securitySchemes:
     accessKey:
       type: apiKey
