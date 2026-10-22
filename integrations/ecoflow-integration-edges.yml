@@ -109,6 +109,50 @@ edges:
       P856 not contradicting (Kin 2026-10-20 decision 2)
   detected_by: sweep-apple-mfi-ecosystem.py
   first_seen: '2026-10-21'
+- partner_name: US EPA ENERGY STAR
+  partner: null
+  partner_match: register-name
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://data.energystar.gov/d/8wj2-sec8
+  category: ENERGY STAR product certification
+  contract_reference:
+    register: ENERGY STAR Model Index, all currently certified models (data.energystar.gov/resource/8wj2-sec8)
+    standard: ENERGY STAR (US EPA product specifications)
+    spec_file: null
+    role: energy-star-partner
+    registered_name: EcoFlow Inc.
+    register_id: https://data.energystar.gov/d/8wj2-sec8
+    matched_domain: null
+    matched_by: register-name
+    certified_products:
+    - product: Electric Vehicle Supply Equipment
+      product_type: Electric Vehicle Supply Equipment
+      lapsed: false
+      brands:
+      - ECOFLOW
+      first_certified: '2025-06-06'
+      connected: true
+      connected_protocols:
+      - Other LAN (Local Area Network)
+      - Wi-Fi or Gigabit Ethernet
+    connected_product_types:
+    - Electric Vehicle Supply Equipment
+    signal_note: 'certified_products = ONE entry per ENERGY STAR product category with a currently certified model
+      (the Model Index lists current certifications only, so lapsed is False; delisted models drop out); connected:
+      true where the category''s dataset flags connected / network capability for this partner''s models (Smart
+      Thermostats and Connected lighting are connected by definition). Brands are context; model counts are never
+      counted.'
+    detected_by: sweep-energy-star-certified-products.py
+    detected: '2026-10-22'
+    register_name_note: register-name 'ecoflow' = ecoflow; no wikidata P856
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  detected_by: sweep-energy-star-certified-products.py
+  first_seen: '2026-10-22'
 generated: '2026-10-20'
 method: searched
 checked:
@@ -116,5 +160,8 @@ checked:
 - https://csa-iot.org/csa-iot_products/
 - https://mfi.apple.com/en/account/accessory-search
 - https://partnernetwork.apple.com/
+- https://data.energystar.gov/api/views/metadata/v1
+- https://data.energystar.gov/resource/8wj2-sec8.json
+- https://www.energystar.gov/productfinder/
 source:
 - https://solarequipment.energy.ca.gov/Home/DownloadtoExcel?filename=InvertersList
