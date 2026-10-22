@@ -153,6 +153,44 @@ edges:
       P856 not contradicting (Kin 2026-10-20 decision 2)
   detected_by: sweep-energy-star-certified-products.py
   first_seen: '2026-10-22'
+- partner_name: Home Assistant Community Store (HACS)
+  partner: null
+  partner_match: register-name
+  type: marketplace
+  marketplace: HACS default repository
+  evidence: https://github.com/snell-evan-itt/hassio-ecoflow-cloud-US
+  category: home-automation
+  contract_reference:
+    register: HACS default integration list (github.com/hacs/default, pinned commit) + HA analytics custom_integrations.json
+    standard: Home Assistant custom integration (HACS)
+    spec_file: null
+    role: hacs-community-integration
+    register_id: https://raw.githubusercontent.com/hacs/default/dee7a0eddd9644e8373be114cdb7818443014ba0/integration
+    pinned_commit: dee7a0eddd9644e8373be114cdb7818443014ba0
+    matched_by: register-name
+    match_note: register-name 'ecoflow' = ecoflow; no wikidata P856
+    integrations:
+    - domain: ecoflow_cloud
+      name: Ecoflow-Cloud
+      repo: https://github.com/snell-evan-itt/hassio-ecoflow-cloud-US
+      builder: snell-evan-itt
+      installs: 4244
+      installs_band: 1k-10k
+    max_installs: 4244
+    installs_source: https://analytics.home-assistant.io/custom_integrations.json
+    signal_note: installs = HA's opt-in analytics count for the integration's domain on the read date (a floor,
+      opt-in only); per-integration context, never summed or counted as edges
+    detected_by: sweep-home-assistant-hacs-custom.py
+    detected: '2026-10-22'
+    registered_name: Ecoflow-Cloud
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  detected_by: sweep-home-assistant-hacs-custom.py
+  first_seen: '2026-10-22'
+  channel: partner-built
+  relationship: connector-coverage
+  direction: partner-built
 generated: '2026-10-20'
 method: searched
 checked:
@@ -163,5 +201,7 @@ checked:
 - https://data.energystar.gov/api/views/metadata/v1
 - https://data.energystar.gov/resource/8wj2-sec8.json
 - https://www.energystar.gov/productfinder/
+- https://analytics.home-assistant.io/custom_integrations.json
+- https://raw.githubusercontent.com/hacs/default/dee7a0eddd9644e8373be114cdb7818443014ba0/integration
 source:
 - https://solarequipment.energy.ca.gov/Home/DownloadtoExcel?filename=InvertersList
