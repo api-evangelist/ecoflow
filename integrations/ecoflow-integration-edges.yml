@@ -191,6 +191,30 @@ edges:
   channel: partner-built
   relationship: connector-coverage
   direction: partner-built
+- partner_name: LF Energy (members)
+  partner: lf-energy
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://landscape.lfenergy.org/
+  category: open-source energy foundation membership
+  partner_tier: general
+  contract_reference:
+    register: LF Energy members (landscape.lfenergy.org/data/full.json)
+    standard: LF Energy
+    spec_file: null
+    role: lf-energy-member
+    registered_name: EcoFlow Inc.
+    register_id: lf-energy-member--general--ecoflow-inc-member
+    matched_domain: ecoflow.com
+    matched_by: domain
+    signal_note: 'participation only: membership tier is partner_tier, never counted'
+    detected_by: sweep-lf-energy-landscape.py
+    detected: '2026-10-22'
+  detected_by: sweep-lf-energy-landscape.py
+  first_seen: '2026-10-22'
 generated: '2026-10-20'
 method: searched
 checked:
@@ -203,5 +227,8 @@ checked:
 - https://www.energystar.gov/productfinder/
 - https://analytics.home-assistant.io/custom_integrations.json
 - https://raw.githubusercontent.com/hacs/default/dee7a0eddd9644e8373be114cdb7818443014ba0/integration
+- https://github.com/arras-energy/tsc/blob/HEAD/GOVERNANCE.md
+- https://github.com/opendsm/opendsm/blob/HEAD/MAINTAINERS.md
+- https://landscape.lfenergy.org/data/full.json
 source:
 - https://solarequipment.energy.ca.gov/Home/DownloadtoExcel?filename=InvertersList
