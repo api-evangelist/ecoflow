@@ -64,6 +64,131 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-EcoFlow is a company surfaced as a portfolio company of hongshan and added to the API Evangelist network as a stub for enrichment. Sector: technology. This profile is a lead awaiting the enrichment pipeline.
+EcoFlow is a portable power and home energy-storage company known for its Delta and River portable power stations, PowerStream balcony micro-inverter, Power Kits, smart generators, whole-home backup systems and solar panels. For developers it operates the EcoFlow IoT Open Platform (developer.ecoflow.com), an HTTP + MQTT API that lets applications discover the EcoFlow devices bound to a user account, read live device telemetry ("quota" property values such as battery state of charge, input/output watts, temperatures and switch states), send device function commands, and stream real-time updates over MQTT. Access is authenticated with an accessKey / secretKey pair from the developer console and an HMAC-SHA256 request signature. The platform serves both a global/US region (api.ecoflow.com) and a separate Europe region (api-e.ecoflow.com), reflecting EcoFlow's strict per-region account separation.
 
-Backed by: hongshan — https://ecoflow.com
+**Areas:** Company · Technology · Energy · Energy Storage · Portable Power · IoT · Smart Home · Solar · Developer API · Real-Time
+
+## EcoFlow on APIs.io
+
+Everything profiled for EcoFlow is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ecoflow/](https://apis.io/providers/ecoflow/)** — or go straight to one of the APIs or properties below.
+
+### APIs (3)
+
+- [EcoFlow Devices API](https://apis.io/apis/ecoflow/ecoflow-devices-api/) — Device discovery and binding
+- [EcoFlow MQTT API](https://apis.io/apis/ecoflow/ecoflow-mqtt-api/) — Obtain MQTT streaming/command certificate
+- [EcoFlow Quota API](https://apis.io/apis/ecoflow/ecoflow-quota-api/) — Read device property (quota) values and send device function commands
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [EcoFlow IoT Open Platform MQTT API](https://apis.io/asyncapis/ecoflow/ecoflow-mqtt-asyncapi/)
+
+#### Event channels (4)
+
+Individual events and webhooks the provider emits.
+
+- [/open/{certificateAccount}/{sn}/quota](https://apis.io/channels/ecoflow/open-certificateaccount-sn-quota/)
+- [/open/{certificateAccount}/{sn}/set](https://apis.io/channels/ecoflow/open-certificateaccount-sn-set/)
+- [/open/{certificateAccount}/{sn}/set_reply](https://apis.io/channels/ecoflow/open-certificateaccount-sn-set-reply/)
+- [/open/{certificateAccount}/{sn}/status](https://apis.io/channels/ecoflow/open-certificateaccount-sn-status/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [ecoflow-iot](https://apis.io/servers/ecoflow/ecoflow-iot/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Ecoflow Agentic Access](https://apis.io/agentic-access/ecoflow/ecoflow-agentic-access/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [EcoFlow IoT Open Platform Devices API](https://apis.io/collections/ecoflow/open-ecoflow-devices-api/)
+- [EcoFlow IoT Open Platform Devices MQTT API](https://apis.io/collections/ecoflow/open-ecoflow-mqtt-api/)
+- [EcoFlow IoT Open Platform Devices Quota API](https://apis.io/collections/ecoflow/open-ecoflow-quota-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Ecoflow Iot Overlay](https://apis.io/overlays/ecoflow/ecoflow-iot-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Ecoflow Authentication](https://apis.io/security/ecoflow/ecoflow-authentication/)
+- [Ecoflow Domain Security](https://apis.io/security/ecoflow/ecoflow-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://ecoflow.com)
+- [Documentation](https://developer.ecoflow.com)
+- [Getting started](https://developer.ecoflow.com)
+- [Support](https://developer.ecoflow.com)
+- [Blog](https://www.ecoflow.com/us/blog)
+
+## API Evangelist rating
+
+**Kin Score 25.6** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 60.3 |
+| Contract governance | 4.5 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 16.1 |
+| Access clarity | 0.0 |
+
+**Agent readiness 25.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 13.9** — Energy & Utilities
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ecoflow/](https://apis.io/providers/ecoflow/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for EcoFlow: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ecoflow/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
